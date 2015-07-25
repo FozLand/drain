@@ -23,10 +23,11 @@ core.register_chatcommand( 'drain', {
       for x = center.x-chunk, center.x+chunk do
         for z = center.z-chunk, center.z+chunk do
           local node = core.get_node_or_nil( {x=x,y=y,z=z} )
-          if node and core.registered_items[node.name].buildable_to then
-            core.remove_node( {x=x,y=y,z=z} )
-          --elseif node then
-          --  print( string.format( '%s: %s', node.name, core.registered_items[node.name].buildable_to ) )
+          if node then
+            local item = minetest.registered_items[node.name]
+            if item and item.buildable_to then
+              core.remove_node( {x=x,y=y,z=z} )
+            end
           end
         end
       end
